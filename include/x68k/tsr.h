@@ -57,7 +57,7 @@ struct tsr_devheader_first {
 
 #define TSR_ASMSERVICES(_interrupt, _id) \
     __asm__ ( \
-        "       .section \".header.asm\",\"ax\"\n" \
+        "       .pushsection \".header.asm\",\"ax\"\n" \
         "       .global _strategy_asm_" #_id "\n" \
         "_strategy_asm_" #_id ":\n" \
         "       move.l  %a5,_reqheader_" #_id "\n" \
@@ -76,6 +76,7 @@ struct tsr_devheader_first {
         "       move.b  %d0,%a0@(4)\n" \
         "       movem.l %sp@+,%d0-%d2/%a0-%a2\n" \
         "       rts\n\n" \
+        "       .popsection\n" \
     )
 
 // 現在のデバイスドライバのデバイスヘッダを取得する

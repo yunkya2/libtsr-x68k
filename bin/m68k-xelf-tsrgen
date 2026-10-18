@@ -149,7 +149,7 @@ fi
 tmpfile=$(mktemp "${outfile}.tmp.XXXXXX")
 trap 'rm -f "$tmpfile"' EXIT
 
-m68k-xelf-ld -r -o "$tmpfile" \
+m68k-xelf-ld -r -d -o "$tmpfile" \
   "${search_args[@]}" \
   "${link_args[@]}" \
   "${libraries[@]}" \

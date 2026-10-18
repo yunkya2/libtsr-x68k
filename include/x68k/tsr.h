@@ -32,6 +32,11 @@ struct tsr_devheader_first {
 #define TSR_DEVHEADER_ID(_id)       _devheader_ ## _id
 #define TSR_DEVHEADER_ID_STR(_id)   "_devheader_" #_id
 
+// 別の翻訳単位で定義したデバイスヘッダを参照するための宣言
+extern struct tsr_devheader_first TSR_DEVHEADER_ID();
+#define TSR_DECLARE_DEVHEADER_ID(_id) \
+    extern struct tsr_devheader TSR_DEVHEADER_ID(_id)
+
 #define TSR_DEFDEVHEADER_FIRST(_attr, _name, _next, _tail) \
     extern void _strategy_asm_(void); \
     extern void _interrupt_asm_(void); \

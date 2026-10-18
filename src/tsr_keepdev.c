@@ -33,7 +33,6 @@
 __attribute__((__noreturn__))
 void tsr_keepdev(void *tsrend, int code)
 {
-    extern struct tsr_devheader_first TSR_DEVHEADER_ID();
     TSR_DEVHEADER_ID().memblock = _dos_getpdb();
 
     int ssp = tsr_super(0);

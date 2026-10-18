@@ -364,7 +364,7 @@ static inline void tsr_restoreirq(uint16_t sr)
     );
 }
 
-// tsr_setvectors, tsr_restorevectors, tsr_getoldvectorで扱うベクタ情報
+// tsr_setvectors, tsr_checkvectors, tsr_restorevectors, tsr_getoldvectorで扱うベクタ情報
 struct tsr_vecinfo {
     int vecno;      // ベクタ番号 (0なら配列の終端)
     void *newvec;   // 変更後の処理アドレス (呼び出し側が設定する)
@@ -376,6 +376,12 @@ typedef struct tsr_vecinfo tsr_vecinfo_t;
 //  vecs: ベクタ情報配列 (vecnoが0の要素で終端)
 //  戻り値: なし
 void tsr_setvectors(struct tsr_vecinfo *vecs);
+
+// 配列中のすべてのベクタが設定時のアドレスを指しているか確認する
+//  vecs: ベクタ情報配列 (vecnoが0の要素で終端)
+//  戻り値: 0 全ベクタが変更されていない
+//          -1 変更されたベクタがあった
+int tsr_checkvectors(const struct tsr_vecinfo *vecs);
 
 // 複数のベクタをまとめて変更前のアドレスに復帰する
 //  vecs: ベクタ情報配列 (vecnoが0の要素で終端)

@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-#include <x68k/dos_inline.h>
 #include <x68k/tsr.h>
 
 // 複数のベクタをまとめて変更前のアドレスに復帰する
@@ -31,10 +30,8 @@
 //          -1 復帰できないベクタがあった
 int tsr_restorevectors(struct tsr_vecinfo *vecs)
 {
-    for (int i = 0; vecs[i].vecno != 0; i++) {
-        if (_dos_intvcg(vecs[i].vecno) != vecs[i].newvec) {
-            return -1;
-        }
+    if (tsr_checkvectors(vecs) < 0) {
+        return -1;
     }
 
     for (int i = 0; vecs[i].vecno != 0; i++) {

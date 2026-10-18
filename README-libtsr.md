@@ -312,13 +312,16 @@ struct tsr_vecinfo {
 typedef struct tsr_vecinfo tsr_vecinfo_t;
 ```
 
-`tsr_setvectors`、`tsr_restorevectors`、`tsr_getoldvector` で扱うベクタ情報です。
+`tsr_setvectors`、`tsr_checkvectors`、`tsr_restorevectors`、`tsr_getoldvector` で扱うベクタ情報です。
 `vecno == 0` の要素が配列終端となります。
 `newvec` は変更後の処理アドレスとして呼び出し側が設定し、`oldvec` は変更前の
 処理アドレスとして `tsr_setvectors` が設定します。
 
 * void **tsr_setvectors**(struct tsr_vecinfo \**vecs*);
     * *vecs* の各ベクタを `newvec` へ変更し、元のアドレスを `oldvec` へ保存します
+* int **tsr_checkvectors**(const struct tsr_vecinfo \**vecs*);
+    * *vecs* の全ベクタが現在も `newvec` を指しているか確認します
+    * 全ベクタが変更されていなければ0、一つでも変更されていれば -1 を返します
 * int **tsr_restorevectors**(struct tsr_vecinfo \**vecs*);
     * *vecs* の全ベクタが現在も `newvec` を指すことを確認してから `oldvec` へ復帰します
     * 成功時は0、一つでも復帰できないベクタがある場合は何も復帰せず -1 を返します

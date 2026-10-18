@@ -45,7 +45,7 @@ OBJS = tsr_finddev.o tsr_keepdev.o tsr_getresidentend.o \
        tsr_bpb2dpb.o tsr_attachdrive.o tsr_getlogicaldrive.o \
        tsr_detachdrive.o tsr_formatdrive.o \
        tsr_parseinitparam.o tsr_heapfree.o \
-       tsr_setvectors.o tsr_restorevectors.o tsr_getoldvector.o
+       tsr_setvectors.o tsr_checkvectors.o tsr_restorevectors.o tsr_getoldvector.o
 OBJS := $(addprefix $(BUILDDIR)/,$(OBJS))
 
 TARGET = $(LIBDIR)/libx68ktsr.a

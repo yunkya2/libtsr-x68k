@@ -183,11 +183,16 @@ fi
 
 rename_args=()
 while read -r section; do
+    case $section in
+        .text|.text.*) target=.tsr.text ;;
+        .rodata|.rodata.*) target=.tsr.rodata ;;
+        .data|.data.*) target=.tsr.data ;;
+        .bss|.bss.*) target=.tsr.bss ;;
+        *) continue ;;
+    esac
     rename_args+=("--rename-section" \
-                 "$section=.tsr$section,alloc,load,readonly,code,contents")
-done < <(m68k-xelf-objdump -hw "$tmpfile" |
-         awk '{print $2}' |
-         grep -E '^\.(text|rodata|data|bss)')
+                 "$section=$target,alloc,load,readonly,code,contents")
+done < <(m68k-xelf-objdump -hw "$tmpfile" | awk '{print $2}')
 
 m68k-xelf-objcopy "${rename_args[@]}" "$tmpfile"
 mv -f "$tmpfile" "$outfile"
